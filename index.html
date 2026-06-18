@@ -88,21 +88,6 @@
             animation-duration: 30s;
             animation-delay: -10s;
         }
-        /* Custom scrollbar styling for the screenshot gallery */
-        .screenshot-gallery::-webkit-scrollbar {
-            height: 8px;
-        }
-        .screenshot-gallery::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 999px;
-        }
-        .screenshot-gallery::-webkit-scrollbar-thumb {
-            background: rgba(34, 211, 238, 0.2);
-            border-radius: 999px;
-        }
-        .screenshot-gallery::-webkit-scrollbar-thumb:hover {
-            background: rgba(34, 211, 238, 0.4);
-        }
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
@@ -206,14 +191,14 @@
                     </div>
                 </div>
 
-                <!-- Phone Mockup with Real Screenshot 1 -->
+                <!-- Phone Mockup with Real Screenshot 1 (Rename safe) -->
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="relative w-full max-w-[300px] p-3 bg-[#1e1e24] border border-white/12 rounded-[40px] shadow-[0_20px_50px_rgba(34,211,238,0.15)]">
                         <!-- Camera Notch -->
                         <div class="absolute top-5 left-1/2 -translate-x-1/2 w-24 h-4 bg-dark rounded-full z-20"></div>
                         <!-- Screen wrapper -->
                         <div class="overflow-hidden rounded-[32px] aspect-[9/19] bg-dark">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%201.png" alt="Pantalla de inicio de FirmApp" class="w-full h-full object-cover">
+                            <img src="pantallas/pantalla_1.png" alt="Pantalla principal de FirmApp" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
@@ -224,143 +209,67 @@
     <!-- Divider -->
     <div class="section-divider"></div>
 
-    <!-- Real Screenshots Showcase Section -->
-    <section class="py-24 px-6 bg-dark/40">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter text-white">Interfaz del Aplicativo</h2>
-                <p class="text-slate-400 text-base md:text-lg">Explora pantallas reales de la suite directamente capturadas desde el dispositivo.</p>
-            </div>
-            
-            <!-- Horizontal scrolling screenshots gallery -->
-            <div class="screenshot-gallery flex gap-8 overflow-x-auto pb-10 px-4 scrollbar-thin">
-                <!-- Screenshot 2 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%202.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Panel Principal</span>
-                </div>
-                
-                <!-- Screenshot 3 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%203.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Gestión de Archivos</span>
-                </div>
-
-                <!-- Screenshot 4 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%204.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Editor e Importador</span>
-                </div>
-
-                <!-- Screenshot 5 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%205.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Herramientas de Firma</span>
-                </div>
-
-                <!-- Screenshot 6 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%206.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Configuración de Seguridad</span>
-                </div>
-
-                <!-- Screenshot 7 -->
-                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
-                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
-                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
-                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%207.png" alt="Pantalla de la App" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="text-xs font-bold text-slate-300">Utilidades de Escáner</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Divider -->
-    <div class="section-divider"></div>
-
-    <!-- Features Section -->
+    <!-- Features and Second Screen Showcase -->
     <section class="py-24 px-6 bg-dark">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter text-white">Productividad sin complicaciones</h2>
-                <p class="text-slate-400 text-base md:text-lg">Herramientas ágiles y avanzadas pensadas para facilitar tus tareas diarias con documentos desde el teléfono móvil.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <!-- Features side -->
+                <div class="lg:col-span-7 space-y-12">
+                    <div class="text-left">
+                        <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter text-white">Productividad sin complicaciones</h2>
+                        <p class="text-slate-400 text-base md:text-lg">Herramientas ágiles y avanzadas pensadas para facilitar tus tareas diarias con documentos desde el teléfono móvil.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Escaneo Inteligente</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Captura hojas físicas de forma nítida. Detecta automáticamente bordes del papel, optimiza perspectivas y ajusta la orientación, brillo y contraste con precisión.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <!-- Feature 1 -->
+                        <div class="p-6 glass rounded-2xl border border-white/5 glow-hover transition-all duration-300">
+                            <div class="w-10 h-10 mb-4 rounded-xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-white">Escaneo Inteligente</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">Captura hojas físicas de forma nítida. Detecta automáticamente bordes del papel y optimiza la perspectiva y brillo.</p>
+                        </div>
+                        
+                        <!-- Feature 2 -->
+                        <div class="p-6 glass rounded-2xl border border-white/5 glow-hover transition-all duration-300">
+                            <div class="w-10 h-10 mb-4 rounded-xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-white">Gestión de Firmas</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">Digitaliza tus firmas manuscritas dibujándolas en pantalla con curvas suavizadas Bézier o aislándolas de fotos físicas.</p>
+                        </div>
+                        
+                        <!-- Feature 3 -->
+                        <div class="p-6 glass rounded-2xl border border-white/5 glow-hover transition-all duration-300">
+                            <div class="w-10 h-10 mb-4 rounded-xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-white">Edición y Formularios</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">Completa casillas de texto interactivo en PDF con control fino de ubicación por lupa digital de aumento.</p>
+                        </div>
+                        
+                        <!-- Feature 4 -->
+                        <div class="p-6 glass rounded-2xl border border-white/5 glow-hover transition-all duration-300">
+                            <div class="w-10 h-10 mb-4 rounded-xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 text-white">Herramienta OCR</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">Extrae texto editable de cualquier documento escaneado de forma instantánea en segundos.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Gestión de Firmas</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Digitaliza tus firmas manuscritas dibujándolas directamente en la pantalla con curvas suavizadas, o capturando firmas físicas de papel a través de la cámara con aislamiento inteligente.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Edición y Texto Libre</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Completa casillas de formularios agregando capas de texto con tipografías claras. Utiliza la lupa digital integrada para ubicar textos con precisión exacta.</p>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Fusión de Alta Fidelidad</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Inserta tu firma digitalizada en cualquier página del PDF. Su motor gráfico adapta el trazo e implementa técnicas de mezcla digital para fusionarlo de forma realista con el fondo.</p>
                 </div>
 
-                <!-- Feature 5 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 8V16"></path><path d="M8 12H16"></path></svg>
+                <!-- Second Screen Mockup Showcase (pantalla_2.png) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div class="relative w-full max-w-[270px] p-3 bg-[#1e1e24] border border-white/12 rounded-[40px] shadow-[0_20px_50px_rgba(34,211,238,0.1)]">
+                        <!-- Camera Notch -->
+                        <div class="absolute top-5 left-1/2 -translate-x-1/2 w-24 h-4 bg-dark rounded-full z-20"></div>
+                        <!-- Screen wrapper -->
+                        <div class="overflow-hidden rounded-[32px] aspect-[9/19] bg-dark">
+                            <img src="pantallas/pantalla_2.png" alt="Pantalla secundaria de FirmApp" class="w-full h-full object-cover">
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Reordenado y Mezcla</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Unifica múltiples archivos PDF, reordena páginas arrastrándolas de forma visual y extrae hojas específicas rápidamente para generar nuevos documentos personalizados.</p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
-                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Herramienta OCR</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Extrae texto de imágenes y documentos escaneados al instante. Copia, exporta o comparte la información de forma inmediata para agilizar tus flujos corporativos.</p>
+                    <span class="text-xs font-semibold text-slate-400 mt-4 uppercase tracking-wider">Gestión Intuitiva de Documentos</span>
                 </div>
             </div>
         </div>
