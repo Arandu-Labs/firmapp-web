@@ -1,861 +1,387 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <meta charset="utf-8">
-    <title>FirmApp — Escaneo Inteligente, Gestión de Firmas y Edición de PDFs</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="FirmApp de Arandu Labs es una herramienta móvil profesional de alta precisión diseñada para escanear documentos, digitalizar firmas y rellenar formularios en PDF con privacidad total.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirmApp — Escaneo Inteligente, Gestión de Firmas y Edición de PDFs | Arandu Labs</title>
+    <meta name="description" content="FirmApp de Arandu Labs es una suite móvil profesional de alta precisión diseñada para escanear documentos, digitalizar firmas y rellenar formularios en PDF con privacidad total.">
+    <meta name="author" content="Arandu Labs LLC">
+    <link rel="canonical" href="https://firmapp.arandulabs.dev/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://arandulabs.dev/assets/images/logo.png">
     
-    <!-- Google Fonts: Outfit (headings) & Inter (body) -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0b',
+                        deepBlue: '#0f172a',
+                        electricBlue: '#22d3ee', // Cyan 400
+                        accentBlue: '#3b82f6', // Blue 500
+                        primaryPurple: '#7B1FA2', // FirmApp signature color
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
     <style>
-        /* CSS Reset & Variables */
-        :root {
-            --primary: #7B1FA2;
-            --primary-light: #9C27B0;
-            --primary-dark: #4A148C;
-            --text-main: #1F2937;
-            --text-muted: #4B5563;
-            --bg-light: #F9FAFB;
-            --bg-white: #FFFFFF;
-            --border-color: #E5E7EB;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
+            background-color: #0a0a0b;
+            color: #f8fafc;
         }
-
-        h1, h2, h3, h4 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            color: #111827;
+        .glass {
+            background: rgba(10, 10, 11, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Container */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            height: 70px;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .logo svg {
-            width: 32px;
-            height: 32px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .nav-link {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .btn-download {
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 10px rgba(123, 31, 162, 0.2);
-            transition: var(--transition);
-        }
-
-        .btn-download:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(123, 31, 162, 0.3);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 140px 0 80px;
-            background: linear-gradient(180deg, rgba(123, 31, 162, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
-            position: relative;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-cols: 1.1fr 0.9fr;
-            gap: 48px;
-            align-items: center;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: rgba(123, 31, 162, 0.08);
-            border: 1px solid rgba(123, 31, 162, 0.15);
-            color: var(--primary-dark);
-            padding: 6px 16px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-
-        .badge-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--primary);
-        }
-
-        .hero-title {
-            font-size: 48px;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .hero-title span {
-            color: var(--primary);
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            max-width: 540px;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .google-play-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: #0F172A;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .google-play-badge:hover {
-            transform: translateY(-2px);
-            background-color: #1E293B;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .google-play-badge svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .badge-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            line-height: 1.2;
-        }
-
-        .badge-sub {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.8;
-        }
-
-        .badge-main {
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        /* Quote Card */
-        .quote-container {
-            margin-top: 48px;
-        }
-
-        .quote-card {
-            background-color: var(--bg-white);
-            border-left: 4px solid var(--primary);
-            padding: 20px 24px;
-            border-radius: 0 16px 16px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-
-        .quote-text {
-            font-style: italic;
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .quote-author {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        /* Hero Image Panel */
-        .hero-img-panel {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-img-panel svg {
-            width: 100%;
-            max-width: 420px;
-            height: auto;
-            filter: drop-shadow(0 20px 30px rgba(123, 31, 162, 0.08));
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background-color: var(--bg-white);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 56px;
-        }
-
-        .section-title {
-            font-size: 36px;
-            margin-bottom: 16px;
-        }
-
-        .section-desc {
-            font-size: 16px;
-            color: var(--text-muted);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-cols: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.12);
+            border-color: rgba(34, 211, 238, 0.25);
             transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(123, 31, 162, 0.2);
-            background-color: var(--bg-white);
         }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background-color: rgba(123, 31, 162, 0.08);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
+        .text-gradient {
+            background: linear-gradient(to right, #22d3ee, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
+        .text-gradient-purple {
+            background: linear-gradient(to right, #22d3ee, #7B1FA2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .feature-card p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
         }
-
-        /* Security Section */
-        .security {
-            padding: 80px 0;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(123, 31, 162, 0.02) 100%);
-        }
-
-        .security-grid {
-            display: grid;
-            grid-template-cols: 0.92fr 1.08fr;
-            gap: 64px;
-            align-items: center;
-        }
-
-        .security-graphic {
-            display: flex;
-            justify-content: center;
-        }
-
-        .security-graphic svg {
-            width: 100%;
-            max-width: 380px;
-            height: auto;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.04));
-        }
-
-        .security-content h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .security-content p {
-            font-size: 16px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-        }
-
-        .security-points {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .security-point {
-            display: flex;
-            gap: 16px;
-        }
-
-        .security-point-check {
-            width: 24px;
-            height: 24px;
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(123, 31, 162, 0.06) 100%);
+            filter: blur(100px);
             border-radius: 50%;
-            background-color: #DCFCE7;
-            color: #15803D;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 12px;
-            font-weight: 700;
+            z-index: -1;
+            animation: float 20s infinite alternate;
         }
-
-        .security-point-text h4 {
-            font-size: 16px;
-            margin-bottom: 4px;
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.05); }
         }
-
-        .security-point-text p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 0;
+        .blob-2 {
+            top: 15%;
+            right: -10%;
+            animation-duration: 25s;
+            animation-delay: -5s;
         }
-
-        /* Footer */
-        .footer {
-            background-color: #111827;
-            color: #9CA3AF;
-            padding: 60px 0 40px;
-            border-top: 1px solid #1F2937;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-cols: 1.5fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-brand h3 {
-            color: white;
-            font-size: 22px;
-            margin-bottom: 16px;
-        }
-
-        .footer-brand p {
-            font-size: 14px;
-            max-width: 360px;
-            line-height: 1.6;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: flex-end;
-        }
-
-        .footer-links h4 {
-            color: white;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .footer-link {
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .footer-link:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #1F2937;
-            padding-top: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-
-        /* Verification Overlay (Firebase flow fallback) */
-        #verification-overlay {
-            display: none; /* Controlled by JavaScript */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--bg-white);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            text-align: center;
-        }
-
-        .spinner {
-            width: 56px;
-            height: 56px;
-            border: 4px solid rgba(123, 31, 162, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s infinite linear;
-            margin-bottom: 24px;
-        }
-
-        .verification-title {
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .verification-desc {
-            font-size: 16px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            max-width: 400px;
-        }
-
-        .verification-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            width: 100%;
-            max-width: 280px;
-        }
-
-        .btn-action-primary {
-            background-color: var(--primary);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            box-shadow: 0 4px 10px rgba(123, 31, 162, 0.2);
-            transition: var(--transition);
-        }
-
-        .btn-action-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .btn-action-secondary {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .btn-action-secondary:hover {
-            background-color: var(--bg-light);
-            color: var(--text-main);
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive styling */
-        @media (max-width: 968px) {
-            .hero-grid {
-                grid-template-cols: 1fr;
-                text-align: center;
-                gap: 56px;
-            }
-
-            .badge {
-                margin: 0 auto 20px;
-            }
-
-            .hero-title {
-                font-size: 38px;
-            }
-
-            .hero-subtitle {
-                margin: 0 auto 32px;
-            }
-
-            .hero-ctas {
-                justify-content: center;
-            }
-
-            .hero-img-panel {
-                order: -1;
-            }
-
-            .security-grid {
-                grid-template-cols: 1fr;
-                gap: 48px;
-            }
-
-            .security-graphic {
-                order: -1;
-            }
-
-            .footer-grid {
-                grid-template-cols: 1fr;
-                gap: 32px;
-            }
-
-            .footer-links {
-                align-items: flex-start;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
+        .blob-3 {
+            bottom: 5%;
+            left: -5%;
+            animation-duration: 30s;
+            animation-delay: -10s;
         }
     </style>
 </head>
-<body>
+<body class="font-sans antialiased overflow-x-hidden">
 
     <!-- Email Verification Flow Overlay -->
-    <div id="verification-overlay">
-        <div class="spinner"></div>
-        <h2 class="verification-title">¡Email Verificado!</h2>
-        <p class="verification-desc">Estamos abriendo FirmApp en tu dispositivo para que puedas continuar de inmediato.</p>
-        <div class="verification-actions">
-            <a href="firmapp://open" class="btn-action-primary">Abrir la Aplicación</a>
-            <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="btn-action-secondary">Ir a Google Play</a>
+    <div id="verification-overlay" class="hidden fixed inset-0 bg-dark z-[9999] flex flex-col items-center justify-center p-6 text-center">
+        <!-- Spinner -->
+        <div class="w-16 h-16 border-4 border-electricBlue/10 border-top border-t-electricBlue rounded-full animate-spin mb-8"></div>
+        <h2 class="text-3xl font-extrabold text-white mb-3">¡Email Verificado!</h2>
+        <p class="text-slate-400 mb-8 max-w-sm">Estamos abriendo FirmApp en tu dispositivo para que puedas continuar de inmediato.</p>
+        <div class="flex flex-col gap-4 w-full max-w-[280px]">
+            <a href="firmapp://open" class="py-4 bg-electricBlue text-dark font-bold rounded-2xl shadow-lg shadow-electricBlue/20 hover:scale-105 active:scale-95 transition-all">
+                Abrir la Aplicación
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="py-3 bg-white/5 text-slate-300 border border-white/10 font-semibold rounded-2xl hover:bg-white/10 transition-all">
+                Ir a Google Play
+            </a>
         </div>
     </div>
 
-    <!-- Navigation Header -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="120" height="120" rx="30" fill="#7B1FA2"/>
-                    <path d="M35 85V35H60C73.8071 35 85 46.1929 85 60C85 73.8071 73.8071 85 60 85H35Z" fill="white" fill-opacity="0.15"/>
-                    <path d="M45 45V75H58C66.2843 75 73 68.2843 73 60C73 51.7157 66.2843 45 58 45H45Z" fill="white"/>
-                    <circle cx="58" cy="60" r="6" fill="#7B1FA2"/>
-                    <path d="M78 82C80.2091 82 82 80.2091 82 78C82 75.7909 80.2091 74 78 74C75.7909 74 74 75.7909 74 78C74 80.2091 75.7909 82 78 82Z" fill="#9C27B0"/>
-                </svg>
-                <span>FirmApp</span>
+    <!-- Header / Nav -->
+    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/10 bg-dark lg:bg-dark/95 lg:backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- Logo Section -->
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <div class="absolute -inset-2 bg-electricBlue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <!-- Combined Logo style -->
+                    <svg class="relative w-11 h-11 drop-shadow-[0_0_15px_rgba(34, 211, 238, 0.3)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="120" height="120" rx="30" fill="#0f172a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+                        <path d="M35 85V35H60C73.8071 35 85 46.1929 85 60C85 73.8071 73.8071 85 60 85H35Z" fill="#22d3ee" fill-opacity="0.15"/>
+                        <path d="M45 45V75H58C66.2843 75 73 68.2843 73 60C73 51.7157 66.2843 45 58 45H45Z" fill="#22d3ee"/>
+                        <circle cx="58" cy="60" r="6" fill="#0f172a"/>
+                        <path d="M78 82C80.2091 82 82 80.2091 82 78C82 75.7909 80.2091 74 78 74C75.7909 74 74 75.7909 74 78C74 80.2091 75.7909 82 78 82Z" fill="#3b82f6"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl md:text-2xl font-black tracking-tighter leading-none">FirmApp</span>
+                    <span class="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-electricBlue font-bold">by Arandu Labs</span>
+                </div>
             </div>
-            <div class="nav-links">
-                <a href="privacy.html" class="nav-link">Privacidad</a>
-                <a href="terms.html" class="nav-link">Términos</a>
-                <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="btn-download">Descargar</a>
+
+            <!-- Links -->
+            <div class="hidden lg:flex gap-10 text-sm font-bold text-slate-300">
+                <a href="privacy.html" class="hover:text-electricBlue transition-all">Privacidad</a>
+                <a href="terms.html" class="hover:text-electricBlue transition-all">Términos</a>
+                <a href="https://arandulabs.dev" class="hover:text-electricBlue transition-all">Arandu Labs</a>
+            </div>
+
+            <!-- Action Button -->
+            <div>
+                <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="px-6 py-3 bg-electricBlue text-dark font-black rounded-xl shadow-lg shadow-electricBlue/20 hover:scale-105 active:scale-95 transition-all text-xs uppercase tracking-wider">
+                    Descargar
+                </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <div class="badge">
-                    <span class="badge-dot"></span>
-                    Local-First & Privacidad Total
-                </div>
-                <h1 class="hero-title">Digitaliza tus documentos con <span>seguridad</span> absoluta</h1>
-                <p class="hero-subtitle">La suite móvil profesional para escanear, firmar y rellenar PDFs en tu dispositivo de forma ágil y confidencial.</p>
-                
-                <div class="hero-ctas">
-                    <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="google-play-badge" aria-label="Descargar en Google Play">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.609 1.814L13.783 12L3.609 22.186C3.238 21.802 3 21.233 3 20.536V3.464C3 2.767 3.238 2.198 3.609 1.814Z" fill="#EA4335"/>
-                            <path d="M17.915 7.868L13.783 12L17.915 16.132L21.439 14.129C22.407 13.576 22.407 12.424 21.439 11.871L17.915 7.868Z" fill="#FBBC04"/>
-                            <path d="M3.609 22.186L17.915 16.132L13.783 12L3.609 22.186Z" fill="#4285F4"/>
-                            <path d="M3.609 1.814L13.783 12L17.915 7.868L3.609 1.814Z" fill="#34A853"/>
-                        </svg>
-                        <div class="badge-text">
-                            <span class="badge-sub">Disponible en</span>
-                            <span class="badge-main">Google Play</span>
+    <section class="relative pt-44 pb-24 px-6 overflow-hidden">
+        <!-- Floating Glow Blobs -->
+        <div class="blob"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <!-- Text Column -->
+                <div class="lg:col-span-7 space-y-8 text-left">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-electricBlue/20 bg-electricBlue/5 text-electricBlue text-xs font-bold uppercase tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-electricBlue animate-pulse"></span>
+                        Seguridad & Privacidad Local-First
+                    </span>
+                    <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter text-white">
+                        Digitaliza tus documentos con <br>
+                        <span class="text-gradient">seguridad absoluta</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-300 leading-relaxed font-light max-w-2xl">
+                        FirmApp es la suite móvil profesional diseñada para escanear documentos, gestionar firmas manuscritas y editar PDFs directamente en tu dispositivo, garantizando la máxima confidencialidad.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0F172A] border border-white/10 hover:border-electricBlue/30 text-white rounded-2xl shadow-xl transition-all hover:scale-102" aria-label="Descargar en Google Play">
+                            <!-- Play store icon -->
+                            <svg class="w-6 h-6 text-electricBlue" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.609 1.814L13.783 12L3.609 22.186C3.238 21.802 3 21.233 3 20.536V3.464C3 2.767 3.238 2.198 3.609 1.814Z"/>
+                                <path d="M17.915 7.868L13.783 12L17.915 16.132L21.439 14.129C22.407 13.576 22.407 12.424 21.439 11.871L17.915 7.868Z"/>
+                                <path d="M3.609 22.186L17.915 16.132L13.783 12L3.609 22.186Z"/>
+                                <path d="M3.609 1.814L13.783 12L17.915 7.868L3.609 1.814Z"/>
+                            </svg>
+                            <div class="flex flex-col items-start leading-none">
+                                <span class="text-[10px] text-slate-400 uppercase tracking-widest">Disponible en</span>
+                                <span class="text-sm font-bold mt-1">Google Play</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Quote Card (Matching arandulabs.dev philosophy section layout) -->
+                    <div class="pt-6">
+                        <div class="glass p-6 rounded-2xl border-l-4 border-electricBlue max-w-xl">
+                            <p class="text-sm italic text-slate-300 leading-relaxed">
+                                "El verdadero ingenio no está en resolver un problema gastando grandes sumas de dinero, sino en resolverlo de forma brillante con los recursos que ya tenemos a mano."
+                            </p>
+                            <div class="text-xs font-semibold text-electricBlue mt-3">— Julian Maria Ricardi, Fundador de Arandu Labs</div>
                         </div>
-                    </a>
-                </div>
-
-                <div class="quote-container">
-                    <div class="quote-card">
-                        <p class="quote-text">"El verdadero ingenio no está en resolver un problema gastando grandes sumas de dinero, sino en resolverlo de forma brillante con los recursos que ya tenemos a mano."</p>
-                        <div class="quote-author">— Julian Maria Ricardi, Fundador de Arandu Labs</div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="hero-img-panel">
-                <!-- High-quality SVG Illustration instead of placeholder -->
-                <svg viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Background Shadow/Glow -->
-                    <circle cx="200" cy="240" r="160" fill="#7B1FA2" fill-opacity="0.05" filter="blur(20px)"/>
-                    
-                    <!-- Smartphone Frame -->
-                    <rect x="70" y="30" width="260" height="420" rx="36" fill="#1F2937" stroke="#E5E7EB" stroke-width="6"/>
-                    <rect x="75" y="35" width="250" height="410" rx="31" fill="#F3F4F6"/>
-                    <rect x="150" y="42" width="100" height="15" rx="7.5" fill="#111827"/>
-                    
-                    <!-- Screen Content - Document Layout -->
-                    <g transform="translate(90, 75)">
-                        <!-- PDF Header -->
-                        <rect x="0" y="0" width="220" height="320" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1"/>
-                        <rect x="15" y="20" width="80" height="12" rx="4" fill="#E5E7EB"/>
-                        <rect x="15" y="40" width="120" height="6" rx="3" fill="#F3F4F6"/>
+
+                <!-- Graphic/Mockup Column -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <svg class="w-full max-w-[340px] drop-shadow-[0_20px_50px_rgba(34,211,238,0.15)]" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Outer screen glow -->
+                        <circle cx="200" cy="240" r="160" fill="#22d3ee" fill-opacity="0.03" filter="blur(20px)"/>
                         
-                        <!-- Simulated lines -->
-                        <rect x="15" y="70" width="190" height="4" rx="2" fill="#E5E7EB"/>
-                        <rect x="15" y="82" width="190" height="4" rx="2" fill="#E5E7EB"/>
-                        <rect x="15" y="94" width="170" height="4" rx="2" fill="#E5E7EB"/>
-                        <rect x="15" y="106" width="190" height="4" rx="2" fill="#E5E7EB"/>
-                        <rect x="15" y="118" width="110" height="4" rx="2" fill="#E5E7EB"/>
+                        <!-- Smartphone Frame -->
+                        <rect x="70" y="30" width="260" height="420" rx="36" fill="#1e1e24" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
+                        <rect x="75" y="35" width="250" height="410" rx="31" fill="#0a0a0b"/>
+                        <rect x="150" y="42" width="100" height="15" rx="7.5" fill="#111827"/>
                         
-                        <!-- Form Checkboxes -->
-                        <rect x="15" y="145" width="10" height="10" rx="2" fill="white" stroke="#9CA3AF" stroke-width="1.5"/>
-                        <rect x="32" y="147" width="80" height="6" rx="3" fill="#E5E7EB"/>
-                        
-                        <rect x="15" y="165" width="10" height="10" rx="2" fill="#7B1FA2"/>
-                        <path d="M18 17L20 19L23 16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <rect x="32" y="167" width="120" height="6" rx="3" fill="#E5E7EB"/>
-                        
-                        <!-- Text overlay demo -->
-                        <g transform="translate(15, 200)">
-                            <rect x="0" y="0" width="130" height="28" rx="6" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1" stroke-dasharray="2 2"/>
-                            <text x="8" y="18" font-family="'Outfit', sans-serif" font-size="11" font-weight="600" fill="#7B1FA2">Nombre y Apellido</text>
+                        <!-- Screen Content - Document Layout -->
+                        <g transform="translate(90, 75)">
+                            <!-- Document Sheet -->
+                            <rect x="0" y="0" width="220" height="320" rx="12" fill="#16161a" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <rect x="15" y="20" width="80" height="12" rx="4" fill="rgba(34,211,238,0.15)"/>
+                            <rect x="15" y="40" width="120" height="6" rx="3" fill="#2e2e38"/>
+                            
+                            <!-- Lines -->
+                            <rect x="15" y="70" width="190" height="4" rx="2" fill="#2e2e38"/>
+                            <rect x="15" y="82" width="190" height="4" rx="2" fill="#2e2e38"/>
+                            <rect x="15" y="94" width="170" height="4" rx="2" fill="#2e2e38"/>
+                            <rect x="15" y="106" width="190" height="4" rx="2" fill="#2e2e38"/>
+                            <rect x="15" y="118" width="110" height="4" rx="2" fill="#2e2e38"/>
+                            
+                            <!-- Form Checkboxes -->
+                            <rect x="15" y="145" width="10" height="10" rx="2" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                            <rect x="32" y="147" width="80" height="6" rx="3" fill="#2e2e38"/>
+                            
+                            <rect x="15" y="165" width="10" height="10" rx="2" fill="#22d3ee"/>
+                            <path d="M18 17L20 19L23 16" stroke="#0a0a0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="32" y="167" width="120" height="6" rx="3" fill="#2e2e38"/>
+                            
+                            <!-- Text overlay demo -->
+                            <g transform="translate(15, 200)">
+                                <rect x="0" y="0" width="130" height="28" rx="6" fill="rgba(34,211,238,0.08)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="2 2"/>
+                                <text x="8" y="18" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#22d3ee">Nombre y Apellido</text>
+                            </g>
+
+                            <!-- Signature line -->
+                            <line x1="15" y1="270" x2="140" y2="270" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+                            
+                            <!-- Handwritten Signature -->
+                            <path d="M25 265 C 35 235, 55 240, 65 260 C 75 280, 85 240, 115 255 C 125 260, 135 250, 145 258" stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round"/>
                         </g>
-
-                        <!-- Signature Signature Line -->
-                        <line x1="15" y1="270" x2="140" y2="270" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="3 3"/>
-                        <rect x="15" y="275" width="60" height="5" rx="2.5" fill="#9CA3AF"/>
                         
-                        <!-- Handwritten Signature simulation -->
-                        <path d="M25 265 C 35 235, 55 240, 65 260 C 75 280, 85 240, 115 255 C 125 260, 135 250, 145 258" stroke="#7B1FA2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    </g>
-                    
-                    <!-- Scan corner indicators (camera scan simulation) -->
-                    <path d="M120 110 L100 110 L100 130" stroke="#7B1FA2" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M280 110 L300 110 L300 130" stroke="#7B1FA2" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M100 340 L100 360 L120 360" stroke="#7B1FA2" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M300 340 L300 360 L280 360" stroke="#7B1FA2" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-            </div>
-        </div>
-    </header>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Productividad sin complicaciones</h2>
-                <p class="section-desc">Herramientas ágiles y avanzadas pensadas para facilitar tus tareas diarias con documentos desde el teléfono móvil.</p>
-            </div>
-            
-            <div class="features-grid">
-                <!-- Feature 1 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                    </div>
-                    <h3>Escaneo Inteligente</h3>
-                    <p>Captura hojas físicas de forma nítida. Detecta automáticamente bordes del papel, optimiza perspectivas y ajusta la orientación, brillo y contraste con precisión.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                    </div>
-                    <h3>Gestión de Firmas</h3>
-                    <p>Digitaliza tus firmas manuscritas dibujándolas directamente en la pantalla con curvas suavizadas, o capturando firmas físicas de papel a través de la cámara con aislamiento inteligente.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    </div>
-                    <h3>Edición y Texto Libre</h3>
-                    <p>Completa casillas de formularios agregando capas de texto con tipografías claras. Utiliza la lupa digital integrada para ubicar textos con precisión exacta.</p>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-                    </div>
-                    <h3>Fusión de Alta Fidelidad</h3>
-                    <p>Inserta tu firma digitalizada en cualquier página del PDF. Su motor gráfico adapta el trazo e implementa técnicas de mezcla digital para fusionarlo de forma realista con el fondo.</p>
-                </div>
-
-                <!-- Feature 5 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.25a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0v-3ZM12 18.75a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0v-3ZM2.25 12a.75.75 0 0 0 0-1.5h3a.75.75 0 0 0 0 1.5h-3ZM18.75 12a.75.75 0 0 0 0-1.5h3a.75.75 0 0 0 0 1.5h-3Z"></path></svg>
-                    </div>
-                    <h3>Reordenado y Mezcla</h3>
-                    <p>Unifica múltiples archivos PDF, reordena páginas arrastrándolas de forma visual y extrae hojas específicas rápidamente para generar nuevos documentos personalizados.</p>
-                </div>
-
-                <!-- Feature 6 -->
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    </div>
-                    <h3>Herramienta OCR</h3>
-                    <p>Extrae texto de imágenes y documentos escaneados al instante. Copia, exporta o comparte la información de forma inmediata para agilizar tus flujos corporativos.</p>
+                        <!-- Scan corners -->
+                        <path d="M120 110 L100 110 L100 130" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M280 110 L300 110 L300 130" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M100 340 L100 360 L120 360" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M300 340 L300 360 L280 360" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Security & Compliance Section -->
-    <section class="security">
-        <div class="container security-grid">
-            <div class="security-graphic">
-                <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Outer Shield glow -->
-                    <circle cx="200" cy="200" r="140" fill="#22C55E" fill-opacity="0.04" filter="blur(15px)"/>
-                    <!-- Shield outline -->
-                    <path d="M200 60 C260 60, 310 80, 310 80 L310 190 C310 270, 240 320, 200 340 C160 320, 90 270, 90 190 L90 80 C90 80, 140 60, 200 60 Z" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="4"/>
-                    <!-- Inner Shield details -->
-                    <path d="M200 75 C248 75, 290 92, 290 92 L290 185 C290 252, 233 294, 200 312 C167 294, 110 252, 110 185 L110 92 C110 92, 152 75, 200 75 Z" fill="#DCFCE7" fill-opacity="0.4"/>
-                    <!-- Padlock Graphic -->
-                    <g transform="translate(160, 140)">
-                        <rect x="10" y="35" width="60" height="45" rx="8" fill="#15803D"/>
-                        <path d="M20 35 V22 C20 13.7157 26.7157 7 35 7 C43.2843 7 50 13.7157 50 22 V35" stroke="#15803D" stroke-width="8" stroke-linecap="round" fill="none"/>
-                        <circle cx="40" cy="53" r="5" fill="#FFFFFF"/>
-                        <rect x="38" y="58" width="4" height="10" rx="1" fill="#FFFFFF"/>
-                    </g>
-                </svg>
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Features Section -->
+    <section class="py-24 px-6 bg-dark">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter text-white">Productividad sin complicaciones</h2>
+                <p class="text-slate-400 text-base md:text-lg">Herramientas ágiles y avanzadas pensadas para facilitar tus tareas diarias con documentos desde el teléfono móvil.</p>
             </div>
             
-            <div class="security-content">
-                <h2>Seguridad corporativa y privacidad por diseño</h2>
-                <p>FirmApp fue desarrollada bajo estrictos estándares de privacidad local, asegurando el control absoluto de tus datos legales y comerciales.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Escaneo Inteligente</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Captura hojas físicas de forma nítida. Detecta automáticamente bordes del papel, optimiza perspectivas y ajusta la orientación, brillo y contraste con precisión.</p>
+                </div>
                 
-                <div class="security-points">
-                    <div class="security-point">
-                        <div class="security-point-check">✓</div>
-                        <div class="security-point-text">
-                            <h4>Procesamiento Local-First</h4>
-                            <p>Toda la digitalización de firmas y la edición de documentos se procesa localmente en la sandbox segura de tu dispositivo. Tus archivos nunca son enviados a servidores externos.</p>
-                        </div>
+                <!-- Feature 2 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     </div>
-                    
-                    <div class="security-point">
-                        <div class="security-point-check">✓</div>
-                        <div class="security-point-text">
-                            <h4>Cifrado de Firmas Integrado</h4>
-                            <p>Tus firmas digitalizadas se guardan de forma encriptada en la base de datos interna de la aplicación, evitando accesos no autorizados de otros componentes del dispositivo.</p>
-                        </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Gestión de Firmas</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Digitaliza tus firmas manuscritas dibujándolas directamente en la pantalla con curvas suavizadas, o capturando firmas físicas de papel a través de la cámara con aislamiento inteligente.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                     </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Edición y Texto Libre</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Completa casillas de formularios agregando capas de texto con tipografías claras. Utiliza la lupa digital integrada para ubicar textos con precisión exacta.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Fusión de Alta Fidelidad</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Inserta tu firma digitalizada en cualquier página del PDF. Su motor gráfico adapta el trazo e implementa técnicas de mezcla digital para fusionarlo de forma realista con el fondo.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 8V16"></path><path d="M8 12H16"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Reordenado y Mezcla</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Unifica múltiples archivos PDF, reordena páginas arrastrándolas de forma visual y extrae hojas específicas rápidamente para generar nuevos documentos personalizados.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="p-8 glass rounded-3xl border border-white/5 glow-hover transition-all duration-300">
+                    <div class="w-12 h-12 mb-6 rounded-2xl bg-electricBlue/10 flex items-center justify-center text-electricBlue">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Herramienta OCR</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Extrae texto de imágenes y documentos escaneados al instante. Copia, exporta o comparte la información de forma inmediata para agilizar tus flujos corporativos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Security & Compliance Section -->
+    <section class="py-24 px-6 bg-dark">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <!-- Graphic Column -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <svg class="w-full max-w-[340px] drop-shadow-[0_15px_30px_rgba(21,128,61,0.05)]" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Shield outline -->
+                        <path d="M200 60 C260 60, 310 80, 310 80 L310 190 C310 270, 240 320, 200 340 C160 320, 90 270, 90 190 L90 80 C90 80, 140 60, 200 60 Z" fill="#16161a" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                        <!-- Inner Shield details -->
+                        <path d="M200 75 C248 75, 290 92, 290 92 L290 185 C290 252, 233 294, 200 312 C167 294, 110 252, 110 185 L110 92 C110 92, 152 75, 200 75 Z" fill="rgba(34,211,238,0.04)"/>
+                        <!-- Padlock Graphic -->
+                        <g transform="translate(160, 140)">
+                            <rect x="10" y="35" width="60" height="45" rx="8" fill="#22d3ee" fill-opacity="0.9"/>
+                            <path d="M20 35 V22 C20 13.7157 26.7157 7 35 7 C43.2843 7 50 13.7157 50 22 V35" stroke="#22d3ee" stroke-width="8" stroke-linecap="round" fill="none"/>
+                            <circle cx="40" cy="53" r="5" fill="#0a0a0b"/>
+                            <rect x="38" y="58" width="4" height="10" rx="1" fill="#0a0a0b"/>
+                        </g>
+                    </svg>
+                </div>
+                
+                <!-- Content Column -->
+                <div class="lg:col-span-7 space-y-8">
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tighter text-white">Seguridad corporativa y privacidad por diseño</h2>
+                    <p class="text-slate-400 text-base md:text-lg">FirmApp fue desarrollada bajo estrictos estándares de privacidad local, asegurando el control absoluto de tus datos legales y comerciales.</p>
                     
-                    <div class="security-point">
-                        <div class="security-point-check">✓</div>
-                        <div class="security-point-text">
-                            <h4>Procesamiento Efímero Opcional</h4>
-                            <p>Al hacer uso voluntario de utilidades web avanzadas, la información se procesa de forma cifrada extremo a extremo a través de pasarelas efímeras y se elimina de inmediato de los sistemas al finalizar el procesamiento.</p>
+                    <div class="space-y-6">
+                        <!-- Point 1 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-electricBlue/10 flex items-center justify-center text-electricBlue text-xs font-bold">✓</div>
+                            <div>
+                                <h4 class="text-white font-bold text-base mb-1">Procesamiento Local-First</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Toda la digitalización de firmas y la edición de documentos se procesa localmente en la sandbox segura de tu dispositivo. Tus archivos nunca son enviados a servidores externos.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Point 2 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-electricBlue/10 flex items-center justify-center text-electricBlue text-xs font-bold">✓</div>
+                            <div>
+                                <h4 class="text-white font-bold text-base mb-1">Cifrado de Firmas Integrado</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Tus firmas digitalizadas se guardan de forma encriptada en la base de datos interna de la aplicación, evitando accesos no autorizados de otros componentes del dispositivo.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Point 3 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-electricBlue/10 flex items-center justify-center text-electricBlue text-xs font-bold">✓</div>
+                            <div>
+                                <h4 class="text-white font-bold text-base mb-1">Procesamiento Efímero Opcional</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Al hacer uso voluntario de utilidades web avanzadas, la información se procesa de forma cifrada extremo a extremo a través de pasarelas efímeras y se elimina de inmediato de los sistemas al finalizar el procesamiento.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -864,24 +390,24 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h3>FirmApp</h3>
-                    <p>Una aplicación de productividad profesional enfocada en la privacidad, desarrollada y operada por Arandu Labs LLC.</p>
+    <footer class="bg-dark text-slate-500 py-16 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h3 class="text-white font-extrabold text-xl mb-4">FirmApp</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-sm">Una aplicación de productividad profesional enfocada en la privacidad, desarrollada y operada por Arandu Labs LLC.</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Documentación Legal</h4>
-                    <a href="privacy.html" class="footer-link">Política de Privacidad</a>
-                    <a href="terms.html" class="footer-link">Términos y Condiciones</a>
-                    <a href="https://arandulabs.dev" class="footer-link">Sitio Web de Arandu Labs</a>
+                <div class="flex flex-col md:items-end gap-3 text-sm font-semibold">
+                    <span class="text-white text-xs uppercase tracking-widest mb-2">Legal & Desarrollo</span>
+                    <a href="privacy.html" class="hover:text-white transition-colors">Política de Privacidad</a>
+                    <a href="terms.html" class="hover:text-white transition-colors">Términos y Condiciones</a>
+                    <a href="https://arandulabs.dev" class="hover:text-white transition-colors">Sitio Web de Arandu Labs</a>
                 </div>
             </div>
             
-            <div class="footer-bottom">
+            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
                 <p>&copy; 2026 Arandu Labs LLC. Todos los derechos reservados.</p>
-                <p>Desarrollado para Android e iOS.</p>
+                <p class="text-slate-600">Desarrollado para Android e iOS.</p>
             </div>
         </div>
     </footer>
@@ -900,7 +426,7 @@
                 // Mostrar el overlay de verificación bloqueando la pantalla
                 const overlay = document.getElementById('verification-overlay');
                 if (overlay) {
-                    overlay.style.display = 'flex';
+                    overlay.classList.remove('hidden');
                 }
                 
                 // Intentar redirección automática inmediata a la aplicación a través de Custom Scheme
