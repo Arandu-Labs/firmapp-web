@@ -9,7 +9,7 @@
     <link rel="canonical" href="https://firmapp.arandulabs.dev/">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://arandulabs.dev/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="icono.png">
     
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,11 +58,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .text-gradient-purple {
-            background: linear-gradient(to right, #22d3ee, #7B1FA2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
         .section-divider {
             height: 1px;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
@@ -93,6 +88,21 @@
             animation-duration: 30s;
             animation-delay: -10s;
         }
+        /* Custom scrollbar styling for the screenshot gallery */
+        .screenshot-gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+        .screenshot-gallery::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 999px;
+        }
+        .screenshot-gallery::-webkit-scrollbar-thumb {
+            background: rgba(34, 211, 238, 0.2);
+            border-radius: 999px;
+        }
+        .screenshot-gallery::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 211, 238, 0.4);
+        }
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
@@ -120,14 +130,8 @@
             <div class="flex items-center gap-4">
                 <div class="relative group">
                     <div class="absolute -inset-2 bg-electricBlue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <!-- Combined Logo style -->
-                    <svg class="relative w-11 h-11 drop-shadow-[0_0_15px_rgba(34, 211, 238, 0.3)]" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="120" height="120" rx="30" fill="#0f172a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-                        <path d="M35 85V35H60C73.8071 35 85 46.1929 85 60C85 73.8071 73.8071 85 60 85H35Z" fill="#22d3ee" fill-opacity="0.15"/>
-                        <path d="M45 45V75H58C66.2843 75 73 68.2843 73 60C73 51.7157 66.2843 45 58 45H45Z" fill="#22d3ee"/>
-                        <circle cx="58" cy="60" r="6" fill="#0f172a"/>
-                        <path d="M78 82C80.2091 82 82 80.2091 82 78C82 75.7909 80.2091 74 78 74C75.7909 74 74 75.7909 74 78C74 80.2091 75.7909 82 78 82Z" fill="#3b82f6"/>
-                    </svg>
+                    <!-- Real App Logo -->
+                    <img src="icono.png" alt="FirmApp Logo" class="relative w-12 h-12 object-contain rounded-2xl drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xl md:text-2xl font-black tracking-tighter leading-none">FirmApp</span>
@@ -175,13 +179,14 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-5">
+                        <!-- Play store link with official colors and branding -->
                         <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0F172A] border border-white/10 hover:border-electricBlue/30 text-white rounded-2xl shadow-xl transition-all hover:scale-102" aria-label="Descargar en Google Play">
-                            <!-- Play store icon -->
-                            <svg class="w-6 h-6 text-electricBlue" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.609 1.814L13.783 12L3.609 22.186C3.238 21.802 3 21.233 3 20.536V3.464C3 2.767 3.238 2.198 3.609 1.814Z"/>
-                                <path d="M17.915 7.868L13.783 12L17.915 16.132L21.439 14.129C22.407 13.576 22.407 12.424 21.439 11.871L17.915 7.868Z"/>
-                                <path d="M3.609 22.186L17.915 16.132L13.783 12L3.609 22.186Z"/>
-                                <path d="M3.609 1.814L13.783 12L17.915 7.868L3.609 1.814Z"/>
+                            <!-- Official Play Store Icon with proper branding colors -->
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.609 1.814L13.783 12L3.609 22.186C3.238 21.802 3 21.233 3 20.536V3.464C3 2.767 3.238 2.198 3.609 1.814Z" fill="#EA4335"/>
+                                <path d="M17.915 7.868L13.783 12L17.915 16.132L21.439 14.129C22.407 13.576 22.407 12.424 21.439 11.871L17.915 7.868Z" fill="#FBBC04"/>
+                                <path d="M3.609 22.186L17.915 16.132L13.783 12L3.609 22.186Z" fill="#4285F4"/>
+                                <path d="M3.609 1.814L13.783 12L17.915 7.868L3.609 1.814Z" fill="#34A853"/>
                             </svg>
                             <div class="flex flex-col items-start leading-none">
                                 <span class="text-[10px] text-slate-400 uppercase tracking-widest">Disponible en</span>
@@ -201,58 +206,92 @@
                     </div>
                 </div>
 
-                <!-- Graphic/Mockup Column -->
+                <!-- Phone Mockup with Real Screenshot 1 -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <svg class="w-full max-w-[340px] drop-shadow-[0_20px_50px_rgba(34,211,238,0.15)]" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Outer screen glow -->
-                        <circle cx="200" cy="240" r="160" fill="#22d3ee" fill-opacity="0.03" filter="blur(20px)"/>
-                        
-                        <!-- Smartphone Frame -->
-                        <rect x="70" y="30" width="260" height="420" rx="36" fill="#1e1e24" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
-                        <rect x="75" y="35" width="250" height="410" rx="31" fill="#0a0a0b"/>
-                        <rect x="150" y="42" width="100" height="15" rx="7.5" fill="#111827"/>
-                        
-                        <!-- Screen Content - Document Layout -->
-                        <g transform="translate(90, 75)">
-                            <!-- Document Sheet -->
-                            <rect x="0" y="0" width="220" height="320" rx="12" fill="#16161a" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                            <rect x="15" y="20" width="80" height="12" rx="4" fill="rgba(34,211,238,0.15)"/>
-                            <rect x="15" y="40" width="120" height="6" rx="3" fill="#2e2e38"/>
-                            
-                            <!-- Lines -->
-                            <rect x="15" y="70" width="190" height="4" rx="2" fill="#2e2e38"/>
-                            <rect x="15" y="82" width="190" height="4" rx="2" fill="#2e2e38"/>
-                            <rect x="15" y="94" width="170" height="4" rx="2" fill="#2e2e38"/>
-                            <rect x="15" y="106" width="190" height="4" rx="2" fill="#2e2e38"/>
-                            <rect x="15" y="118" width="110" height="4" rx="2" fill="#2e2e38"/>
-                            
-                            <!-- Form Checkboxes -->
-                            <rect x="15" y="145" width="10" height="10" rx="2" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-                            <rect x="32" y="147" width="80" height="6" rx="3" fill="#2e2e38"/>
-                            
-                            <rect x="15" y="165" width="10" height="10" rx="2" fill="#22d3ee"/>
-                            <path d="M18 17L20 19L23 16" stroke="#0a0a0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <rect x="32" y="167" width="120" height="6" rx="3" fill="#2e2e38"/>
-                            
-                            <!-- Text overlay demo -->
-                            <g transform="translate(15, 200)">
-                                <rect x="0" y="0" width="130" height="28" rx="6" fill="rgba(34,211,238,0.08)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="2 2"/>
-                                <text x="8" y="18" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#22d3ee">Nombre y Apellido</text>
-                            </g>
+                    <div class="relative w-full max-w-[300px] p-3 bg-[#1e1e24] border border-white/12 rounded-[40px] shadow-[0_20px_50px_rgba(34,211,238,0.15)]">
+                        <!-- Camera Notch -->
+                        <div class="absolute top-5 left-1/2 -translate-x-1/2 w-24 h-4 bg-dark rounded-full z-20"></div>
+                        <!-- Screen wrapper -->
+                        <div class="overflow-hidden rounded-[32px] aspect-[9/19] bg-dark">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%201.png" alt="Pantalla de inicio de FirmApp" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                            <!-- Signature line -->
-                            <line x1="15" y1="270" x2="140" y2="270" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
-                            
-                            <!-- Handwritten Signature -->
-                            <path d="M25 265 C 35 235, 55 240, 65 260 C 75 280, 85 240, 115 255 C 125 260, 135 250, 145 258" stroke="#22d3ee" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                        </g>
-                        
-                        <!-- Scan corners -->
-                        <path d="M120 110 L100 110 L100 130" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M280 110 L300 110 L300 130" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M100 340 L100 360 L120 360" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M300 340 L300 360 L280 360" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Real Screenshots Showcase Section -->
+    <section class="py-24 px-6 bg-dark/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter text-white">Interfaz del Aplicativo</h2>
+                <p class="text-slate-400 text-base md:text-lg">Explora pantallas reales de la suite directamente capturadas desde el dispositivo.</p>
+            </div>
+            
+            <!-- Horizontal scrolling screenshots gallery -->
+            <div class="screenshot-gallery flex gap-8 overflow-x-auto pb-10 px-4 scrollbar-thin">
+                <!-- Screenshot 2 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%202.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Panel Principal</span>
+                </div>
+                
+                <!-- Screenshot 3 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%203.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Gestión de Archivos</span>
+                </div>
+
+                <!-- Screenshot 4 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%204.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Editor e Importador</span>
+                </div>
+
+                <!-- Screenshot 5 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%205.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Herramientas de Firma</span>
+                </div>
+
+                <!-- Screenshot 6 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%206.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Configuración de Seguridad</span>
+                </div>
+
+                <!-- Screenshot 7 -->
+                <div class="flex-shrink-0 w-[240px] flex flex-col items-center gap-4">
+                    <div class="p-2 bg-[#1e1e24] border border-white/10 rounded-[30px] shadow-lg">
+                        <div class="overflow-hidden rounded-[22px] aspect-[9/19] bg-dark w-[220px]">
+                            <img src="pantallas/Samsung%20Galaxy%20S21%20Ultra%20Screenshot%207.png" alt="Pantalla de la App" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300">Utilidades de Escáner</span>
                 </div>
             </div>
         </div>
