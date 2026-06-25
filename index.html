@@ -94,18 +94,45 @@
 
     <!-- Email Verification Flow Overlay -->
     <div id="verification-overlay" class="hidden fixed inset-0 bg-dark z-[9999] flex flex-col items-center justify-center p-6 text-center">
-        <!-- Spinner -->
-        <div class="w-16 h-16 border-4 border-electricBlue/10 border-top border-t-electricBlue rounded-full animate-spin mb-8"></div>
-        <h2 id="verify-title" class="text-3xl font-extrabold text-white mb-3">¡Email Verificado!</h2>
-        <p id="verify-desc" class="text-slate-400 mb-8 max-w-sm">Estamos abriendo FirmApp en tu dispositivo para que puedas continuar de inmediato.</p>
-        <div class="flex flex-col gap-4 w-full max-w-[280px]">
-            <a href="firmapp://open" id="verify-btn-open" class="py-4 bg-electricBlue text-dark font-bold rounded-2xl shadow-lg shadow-electricBlue/20 hover:scale-105 active:scale-95 transition-all text-sm uppercase tracking-wider">
-                Abrir la Aplicación
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" id="verify-btn-play" class="py-3 bg-white/5 text-slate-300 border border-white/10 font-semibold rounded-2xl hover:bg-white/10 transition-all text-xs uppercase tracking-wider">
-                Ir a Google Play
-            </a>
+
+        <!-- STATE: Loading -->
+        <div id="verify-state-loading">
+            <div class="w-16 h-16 border-4 border-electricBlue/10 border-t-electricBlue rounded-full animate-spin mb-8 mx-auto"></div>
+            <h2 id="verify-loading-title" class="text-2xl font-extrabold text-white mb-3">Verificando tu cuenta...</h2>
+            <p id="verify-loading-desc" class="text-slate-400 max-w-sm">Por favor espera un momento.</p>
         </div>
+
+        <!-- STATE: Success (hidden by default) -->
+        <div id="verify-state-success" class="hidden">
+            <div class="w-20 h-20 rounded-full bg-electricBlue/10 flex items-center justify-center mb-8 mx-auto">
+                <svg class="w-10 h-10 text-electricBlue" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h2 id="verify-title" class="text-3xl font-extrabold text-white mb-3">¡Email Verificado!</h2>
+            <p id="verify-desc" class="text-slate-400 mb-8 max-w-sm">Estamos abriendo FirmApp en tu dispositivo para que puedas continuar de inmediato.</p>
+            <div class="flex flex-col gap-4 w-full max-w-[280px] mx-auto">
+                <a href="firmapp://open" id="verify-btn-open" class="py-4 bg-electricBlue text-dark font-bold rounded-2xl shadow-lg shadow-electricBlue/20 hover:scale-105 active:scale-95 transition-all text-sm uppercase tracking-wider">
+                    Abrir la Aplicación
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp" id="verify-btn-play" class="py-3 bg-white/5 text-slate-300 border border-white/10 font-semibold rounded-2xl hover:bg-white/10 transition-all text-xs uppercase tracking-wider">
+                    Ir a Google Play
+                </a>
+            </div>
+        </div>
+
+        <!-- STATE: Error (hidden by default) -->
+        <div id="verify-state-error" class="hidden">
+            <div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mb-8 mx-auto">
+                <svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+            <h2 id="verify-error-title" class="text-2xl font-extrabold text-white mb-3">Error de verificación</h2>
+            <p id="verify-error-desc" class="text-slate-400 mb-8 max-w-sm">El enlace puede haber expirado o ya fue utilizado.</p>
+            <div class="flex flex-col gap-4 w-full max-w-[280px] mx-auto">
+                <a href="firmapp://open" id="verify-btn-error-open" class="py-4 bg-white/5 text-slate-300 border border-white/10 font-semibold rounded-2xl hover:bg-white/10 transition-all text-sm uppercase tracking-wider">
+                    Volver a FirmApp
+                </a>
+            </div>
+        </div>
+
     </div>
 
     <!-- Header / Nav -->
@@ -814,39 +841,135 @@
             }
         }
 
-        // Email Verification Handler Script
+        // ─── Email Verification Handler Script (automatic, no user interaction) ───
         (function() {
-            // Analizar parámetros de la URL para detectar el flujo de verificación de email de Firebase
             const urlParams = new URLSearchParams(window.location.search);
-            const isVerificationFlow = urlParams.has('apiKey') || 
-                                       urlParams.has('oobCode') || 
-                                       urlParams.get('mode') === 'verifyEmail' || 
-                                       urlParams.has('verify');
-            
-            if (isVerificationFlow) {
-                // Auto detect user language preference
-                const userLang = (navigator.language || navigator.userLanguage).toLowerCase();
-                let defLang = 'es';
-                if (userLang.startsWith('pt')) defLang = 'pt';
-                else if (userLang.startsWith('en')) defLang = 'en';
-                
-                // Initialize language
-                switchLanguage(defLang);
+            const mode     = urlParams.get('mode');
+            const oobCode  = urlParams.get('oobCode');
+            const apiKey   = urlParams.get('apiKey');
 
-                // Mostrar el overlay de verificación bloqueando la pantalla
-                const overlay = document.getElementById('verification-overlay');
-                if (overlay) {
-                    overlay.classList.remove('hidden');
-                }
-                
-                // Intentar redirección automática inmediata a la aplicación a través de Custom Scheme
-                window.location.href = "firmapp://open";
-                
-                // Fallback automático a Google Play Store tras 2.8 segundos si no tiene la app instalada
-                setTimeout(function() {
-                    window.location.href = "https://play.google.com/store/apps/details?id=dev.arandulabs.firmapp";
-                }, 2800);
+            // Only run on Firebase verifyEmail action links
+            const isVerificationFlow = mode === 'verifyEmail' && oobCode;
+
+            if (!isVerificationFlow) return;
+
+            // ── Language setup ──────────────────────────────────────────────
+            const userLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+            let defLang = 'es';
+            if (userLang.startsWith('pt')) defLang = 'pt';
+            else if (userLang.startsWith('en')) defLang = 'en';
+            switchLanguage(defLang);
+
+            // ── Translated strings ──────────────────────────────────────────
+            const T = {
+                es: {
+                    loadingTitle: 'Verificando tu cuenta…',
+                    loadingDesc:  'Por favor espera un momento.',
+                    successTitle: '¡Email verificado!',
+                    successDesc:  'Tu cuenta ha sido confirmada. Ya puedes usar FirmApp.',
+                    btnOpen:      'Abrir FirmApp',
+                    btnPlay:      'Ir a Google Play',
+                    errorTitle:   'Error de verificación',
+                    errorDesc:    'El enlace expiró o ya fue utilizado. Abre la app y solicita un nuevo correo de verificación.',
+                    btnBack:      'Volver a FirmApp',
+                },
+                en: {
+                    loadingTitle: 'Verifying your account…',
+                    loadingDesc:  'Please wait a moment.',
+                    successTitle: 'Email verified!',
+                    successDesc:  'Your account has been confirmed. You can now use FirmApp.',
+                    btnOpen:      'Open FirmApp',
+                    btnPlay:      'Go to Google Play',
+                    errorTitle:   'Verification error',
+                    errorDesc:    'The link has expired or has already been used. Open the app and request a new verification email.',
+                    btnBack:      'Back to FirmApp',
+                },
+                pt: {
+                    loadingTitle: 'Verificando sua conta…',
+                    loadingDesc:  'Por favor aguarde um momento.',
+                    successTitle: 'E-mail verificado!',
+                    successDesc:  'Sua conta foi confirmada. Agora você pode usar o FirmApp.',
+                    btnOpen:      'Abrir FirmApp',
+                    btnPlay:      'Ir para o Google Play',
+                    errorTitle:   'Erro de verificação',
+                    errorDesc:    'O link expirou ou já foi utilizado. Abra o app e solicite um novo e-mail de verificação.',
+                    btnBack:      'Voltar ao FirmApp',
+                },
+            };
+            const t = T[defLang] || T.es;
+
+            // ── DOM helpers ─────────────────────────────────────────────────
+            function showState(stateName) {
+                ['loading', 'success', 'error'].forEach(function(s) {
+                    const el = document.getElementById('verify-state-' + s);
+                    if (el) el.classList.toggle('hidden', s !== stateName);
+                });
             }
+
+            // ── Show overlay immediately with loading state ─────────────────
+            const overlay = document.getElementById('verification-overlay');
+            if (overlay) overlay.classList.remove('hidden');
+            showState('loading');
+
+            // Apply translations
+            const setText = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
+            setText('verify-loading-title', t.loadingTitle);
+            setText('verify-loading-desc',  t.loadingDesc);
+            setText('verify-title',         t.successTitle);
+            setText('verify-desc',          t.successDesc);
+            setText('verify-btn-open',      t.btnOpen);
+            setText('verify-btn-play',      t.btnPlay);
+            setText('verify-error-title',   t.errorTitle);
+            setText('verify-error-desc',    t.errorDesc);
+            setText('verify-btn-error-open', t.btnBack);
+
+            // ── Firebase applyActionCode via REST API ────────────────────────
+            // We use the Firebase Identity REST endpoint so we don't need to
+            // load the full Firebase JS SDK — just a lightweight fetch call.
+            var effectiveApiKey = apiKey || '';
+            if (!effectiveApiKey) {
+                // Fallback: apiKey may be absent on custom domain redirects;
+                // attempt with the app's known project key via meta tag or default.
+                effectiveApiKey = (document.querySelector('meta[name="firebase-api-key"]') || {}).content || '';
+            }
+
+            var endpoint = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=' + encodeURIComponent(effectiveApiKey);
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oobCode: oobCode })
+            })
+            .then(function(response) {
+                return response.json().then(function(data) {
+                    return { ok: response.ok, data: data };
+                });
+            })
+            .then(function(result) {
+                if (result.ok) {
+                    // ── SUCCESS ─────────────────────────────────────────────
+                    showState('success');
+                    // Auto-attempt deep link after a short pause
+                    setTimeout(function() {
+                        window.location.href = 'firmapp://open';
+                    }, 800);
+                } else {
+                    // ── FIREBASE ERROR ──────────────────────────────────────
+                    var errCode = (result.data.error && result.data.error.message) || 'UNKNOWN';
+                    // Map common Firebase error codes to user-friendly descriptions
+                    var friendlyDesc = t.errorDesc;
+                    if (errCode === 'INVALID_OOB_CODE' || errCode === 'EXPIRED_OOB_CODE') {
+                        friendlyDesc = t.errorDesc; // already covers expired/used
+                    }
+                    setText('verify-error-desc', friendlyDesc);
+                    showState('error');
+                }
+            })
+            .catch(function(err) {
+                // ── NETWORK ERROR ───────────────────────────────────────────
+                setText('verify-error-desc', t.errorDesc);
+                showState('error');
+            });
         })();
     </script>
 </body>
