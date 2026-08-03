@@ -793,6 +793,25 @@
     <script>
         let currentLang = 'es';
 
+        // NUEVO CÓDIGO: Forzar por URL o detectar el idioma del navegador automáticamente
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang'); // Busca ?lang=pt en la URL
+
+            if (langParam === 'es' || langParam === 'en' || langParam === 'pt') {
+                // Si hay un parámetro válido en la URL, usa ese
+                switchLanguage(langParam);
+            } else {
+                // Si no hay parámetro, detecta el idioma del navegador
+                const userLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+                if (userLang.startsWith('pt')) {
+                    switchLanguage('pt');
+                } else if (userLang.startsWith('en')) {
+                    switchLanguage('en');
+                }
+            }
+        });
+
         function switchLanguage(lang) {
             currentLang = lang;
             
