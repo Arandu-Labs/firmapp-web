@@ -123,10 +123,10 @@
             <p class="text-legalSecondary text-lg font-light leading-relaxed">
                 Política de privacidad específica para la aplicación <span class="font-bold text-legalPrimary italic">FirmApp</span>.
             </p>
-            <div class="mt-8 flex items-center gap-4 text-sm text-legalSecondary">
-                <span class="font-bold">Effective Date:</span> 7 de mayo de 2026
+                     <div class="mt-8 flex items-center gap-4 text-sm text-legalSecondary">
+                <span class="font-bold">Fecha de entrada en vigor:</span> 1 de agosto de 2026
                 <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span class="font-bold">Provider:</span> Arandu Labs LLC
+                <span class="font-bold">Proveedor:</span> Arandu Labs LLC
             </div>
             <div class="w-24 h-1 bg-brandBlue mt-10 rounded-full"></div>
         </header>
@@ -145,149 +145,149 @@
 
         <div class="legal-section">
             <p>
-                Esta política de privacidad se aplica a la aplicación FirmApp (en adelante denominada "Aplicación") para dispositivos móviles. La Aplicación fue desarrollada y es operada por Arandu Labs LLC (en adelante denominada "Proveedor de servicios") como un servicio con publicidad. Este servicio está diseñado para su uso "TAL CUAL".
+                Esta política de privacidad se aplica a la aplicación FirmApp (en adelante denominada "Aplicación") para dispositivos móviles. La Aplicación fue desarrollada y es operada por Arandu Labs LLC (en adelante denominado "Proveedor de servicios") como un servicio financiado por publicidad. Este servicio está destinado a ser utilizado "TAL CUAL".
             </p>
+            <div class="highlight-box !bg-blue-50/50 border border-blue-200">
+                <p class="text-sm font-bold text-legalPrimary !mb-2">DIVULGACIÓN CRÍTICA DE PRIVACIDAD (Arquitectura de Conocimiento Cero / Local-First):</p>
+                <p class="text-xs text-legalSecondary !mb-0 leading-relaxed">
+                    FirmApp opera bajo un modelo arquitectónico estrictamente local y de conocimiento cero (Zero-Knowledge). Sus documentos escaneados, firmas digitales capturadas, imágenes y archivos PDF editados se procesan exclusivamente dentro del entorno seguro (sandbox) local de la memoria de su dispositivo. <strong>Sus documentos y contenidos confidenciales nunca abandonan su dispositivo, nunca se suben ni se sincronizan con servidores remotos de Arandu Labs LLC, y están completamente aislados de las redes publicitarias de terceros.</strong>
+                </p>
+            </div>
         </div>
 
         <div class="legal-section">
-            <h2>Recopilación y uso de información</h2>
+            <h2>2. Recopilación y Uso de Información (Telemetría del SDK)</h2>
             <p>
-                La Aplicación recopila información cuando la descarga y la utiliza. Esta información puede incluir información como:
+                Para garantizar la operatividad de los servicios, Arandu Labs LLC integra el Google Mobile Ads SDK (AdMob), Firebase y plataformas de mediación asociadas (como Appodeal). Estos sistemas recopilan de forma automática, cifrada en tránsito (vía TLS) y anonimizada la siguiente telemetría técnica:
             </p>
             <ul>
-                <li>La dirección de protocolo de Internet de su dispositivo (por ejemplo, dirección IP)</li>
-                <li>Identificador de publicidad del dispositivo (por ejemplo, ID de publicidad de Android / GAID) e identificadores de dispositivo</li>
-                <li>Las páginas de la Aplicación que visita, la hora y fecha de su visita, el tiempo que pasa en esas páginas</li>
-                <li>El tiempo dedicado a la Solicitud</li>
-                <li>El sistema operativo que utilizas en tu dispositivo móvil</li>
+                <li><strong>Direcciones IP y Geolocalización Aproximada:</strong> Recopiladas invariablemente para estimar la ubicación general del dispositivo (a nivel de país y ciudad), medir el rendimiento de los anuncios y facilitar la personalización o entrega contextual de campañas publicitarias.</li>
+                <li><strong>Identificadores Únicos y Publicitarios:</strong> Identificador de Publicidad de Android (AAID / GAID), App Set ID e identificadores de hardware/sistema operativo para atribución publicitaria y limitación de frecuencia de anuncios.</li>
+                <li><strong>Diagnósticos y Rendimiento del Sistema:</strong> Telemetría sobre la estabilidad del SDK y la aplicación, incluyendo registros de fallos (crash logs), latencia de carga, tasa de bloqueos (hang rate) y métricas de consumo de energía, empleadas de forma agregada para la resolución de errores.</li>
+                <li><strong>Métricas de Interacción y Uso:</strong> Registro de inicio y cierre de la aplicación, páginas visitadas y eventos agregados de interacción táctil con formatos publicitarios (coordenadas de toques e índices de visualización de video).</li>
             </ul>
             <p>
-                La Aplicación no recopila información precisa sobre la ubicación de su dispositivo móvil.
+                La Aplicación no recopila información precisa de ubicación por GPS de su dispositivo móvil.
             </p>
             <p>
-                La Aplicación no utiliza tecnologías de Inteligencia Artificial (IA) para procesar sus datos ni proporcionar funciones.
+                La Aplicación no utiliza tecnologías de Inteligencia Artificial (IA) para procesar sus documentos ni sus datos personales.
             </p>
             <p>
-                El Proveedor de servicios puede utilizar la información que usted proporcionó para contactarlo de vez en cuando para brindarle información importante, avisos requeridos y promociones de marketing.
-            </p>
-            <p>
-                Para una mejor experiencia, al utilizar la Aplicación, el Proveedor de servicios puede solicitarle que nos proporcione cierta información de identificación personal, que incluye, entre otros, <strong>correo electrónico, ID de usuario y nombre</strong>. La información que el Proveedor de Servicios solicite será retenida por ellos y utilizada como se describe en esta política de privacidad.
+                Para funciones que requieran autenticación (si aplica), el Proveedor de servicios podrá solicitar datos como <strong>correo electrónico, ID de usuario y nombre</strong>, utilizados estrictamente para la gestión de su cuenta.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Acceso de terceros</h2>
+            <h2>3. Acceso y Taxonomía de Proveedores de Terceros</h2>
             <p>
-                Sólo se transmiten periódicamente datos agregados y anonimizados a servicios externos para ayudar al Proveedor de Servicios a mejorar la Aplicación y su servicio. El Proveedor de servicios puede compartir su información con terceros en las formas que se describen en esta declaración de privacidad.
+                Al interactuar con la Aplicación, redes de mediación y proveedores tecnológicos de terceros integrados vía SDKs recopilan telemetría de red (Third-Party Data). Dichas entidades actúan como controladores de datos independientes bajo sus propias políticas:
             </p>
             <div class="highlight-box">
-                <p class="text-sm !mb-6">Please note that the Application utilizes third-party services that have their own política de privacidad about handling data. Below are the links to the política de privacidad of the third-party service providers used by the Application:</p>
+                <p class="text-sm !mb-6 font-medium">Consulte las políticas de privacidad oficiales de los proveedores y redes publicitarias integrados en la Aplicación:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a href="https://www.google.com/policies/privacy/" class="partner-link">Google Play Services</a>
-                    <a href="https://support.google.com/admob/answer/6128543?hl=en" class="partner-link">AdMob</a>
-                    <a href="https://www.appodeal.com/privacy-policy" class="partner-link">Appodeal</a>
-                    <a href="https://firebase.google.com/support/privacy" class="partner-link">Google Analytics for Firebase</a>
-                    <a href="https://firebase.google.com/support/privacy/" class="partner-link">Firebase Crashlytics</a>
-                    <a href="https://www.facebook.com/about/privacy/update/printable" class="partner-link">Facebook</a>
-                    <a href="https://unity3d.com/legal/privacy-policy" class="partner-link">Unity</a>
-                    <a href="https://onesignal.com/privacy_policy" class="partner-link">One Signal</a>
-                    <a href="https://sentry.io/privacy/" class="partner-link">Sentry</a>
-                    <a href="https://www.applovin.com/privacy/" class="partner-link">AppLovin</a>
-                    <a href="https://vungle.com/privacy/" class="partner-link">Vungle</a>
-                    <a href="https://www.startapp.com/privacy/" class="partner-link">StartApp</a>
-                    <a href="https://www.adcolony.com/privacy-policy/" class="partner-link">AdColony</a>
+                    <a href="https://policies.google.com/privacy" class="partner-link" target="_blank" rel="noopener noreferrer">Google Play Services & AdMob</a>
+                    <a href="https://www.appodeal.com/privacy-policy" class="partner-link" target="_blank" rel="noopener noreferrer">Appodeal</a>
+                    <a href="https://firebase.google.com/support/privacy" class="partner-link" target="_blank" rel="noopener noreferrer">Google Analytics for Firebase</a>
+                    <a href="https://firebase.google.com/support/privacy/" class="partner-link" target="_blank" rel="noopener noreferrer">Firebase Crashlytics</a>
+                    <a href="https://www.applovin.com/privacy/" class="partner-link" target="_blank" rel="noopener noreferrer">AppLovin</a>
+                    <a href="https://vungle.com/privacy/" class="partner-link" target="_blank" rel="noopener noreferrer">Vungle / Liftoff</a>
+                    <a href="https://www.startapp.com/privacy/" class="partner-link" target="_blank" rel="noopener noreferrer">StartApp</a>
+                    <a href="https://www.adcolony.com/privacy-policy/" class="partner-link" target="_blank" rel="noopener noreferrer">AdColony</a>
+                    <a href="https://unity3d.com/legal/privacy-policy" class="partner-link" target="_blank" rel="noopener noreferrer">Unity Ads</a>
+                    <a href="https://sentry.io/privacy/" class="partner-link" target="_blank" rel="noopener noreferrer">Sentry</a>
                 </div>
             </div>
             <p>El Proveedor de Servicios puede divulgar Información Proporcionada por el Usuario y Recopilada Automáticamente:</p>
             <ul>
                 <li>Según lo exija la ley, como para cumplir con una citación o proceso legal similar;</li>
                 <li>Cuando crean de buena fe que la divulgación es necesaria para proteger sus derechos, proteger su seguridad o la de otros, investigar fraude o responder a una solicitud del gobierno;</li>
-                <li>Con sus proveedores de servicios de confianza que trabajan en su nombre, no tienen un uso independiente de la información que les revelamos y han aceptado cumplir con las reglas establecidas en esta declaración de privacidad.</li>
+                <li>Con sus proveedores de servicios de confianza que trabajan en su nombre, no tienen un uso independiente de la información y han acordado adherirse a estrictas normas de confidencialidad.</li>
             </ul>
         </div>
 
         <div class="legal-section">
-            <h2>Publicidad y recopilación de datos</h2>
+            <h2>4. Publicidad, Cookies y Consentimiento de Usuarios en Europa (RGPD / TCF Característica 3)</h2>
             <p>
-                Esta aplicación utiliza plataformas y empresas de publicidad de terceros (incluyendo Google AdMob y Appodeal) para mostrar anuncios. Appodeal y otros socios publicitarios pueden recopilar y usar datos para mostrar anuncios personalizados o contextuales. Para más información, consulta la <a href="https://www.appodeal.com/privacy-policy" class="partner-link">Política de Privacidad de Appodeal</a>.
+                La Aplicación muestra anuncios suministrados por plataformas de publicidad de terceros (incluyendo Google AdMob y Appodeal). Estas empresas pueden colocar o leer identificadores, cookies, balizas web y almacenamiento local para servir anuncios contextuales o personalizados, limitar la saturación publicitaria y medir la atribución de campañas.
             </p>
             <div class="highlight-box">
                 <p class="text-sm !mb-4 font-medium text-legalPrimary">
-                    <strong>Importante:</strong> Es posible que terceros estén colocando y leyendo cookies en los navegadores de los usuarios, o utilizando web beacons o direcciones IP para recopilar información como resultado de la serving de anuncios en esta Aplicación.
+                    <strong>Divulgación de Procesamiento de Datos de Google:</strong> Terceros (incluyendo Google LLC) pueden colocar y leer identificadores o usar direcciones IP como resultado del servicio de anuncios. Para conocer con granularidad cómo procesa Google los datos, consulte obligatoriamente: <a href="https://policies.google.com/technologies/partner-sites" class="partner-link" target="_blank" rel="noopener noreferrer">Cómo utiliza Google la información de sitios web o aplicaciones que utilizan nuestros servicios</a>.
                 </p>
-                <p class="text-sm !mb-0">
-                    Para obtener más información sobre cómo Google utiliza los datos cuando utiliza los sitios o aplicaciones de nuestros socios, visite: <a href="https://www.google.com/policies/privacy/partners/" class="partner-link">Cómo utiliza Google los datos cuando utiliza los sitios o aplicaciones de nuestros socios</a>
+                <p class="text-xs text-legalSecondary !mb-0">
+                    <strong>Tratamiento de Direcciones IP (Marco TCF Característica 3):</strong> De conformidad con la Política de Consentimiento de Usuarios de la UE y el Marco de Transparencia y Consentimiento (TCF) de IAB Europa, los usuarios del EEE, Reino Unido y Suiza que otorguen su consentimiento para personalización reconocen que sus direcciones IP se procesan para medición, entrega de anuncios y prevención de fraude bajo la Característica 3 del TCF ("Identificar dispositivos basados en información transmitida automáticamente").
                 </p>
             </div>
             <p>
-                La Aplicación y sus socios publicitarios pueden utilizar cookies, web beacons, direcciones IP y otros identificadores para:
-            </p>
-            <ul>
-                <li>Servir anuncios que sean relevantes para sus intereses</li>
-                <li>Medir la efectividad de las campañas publicitarias</li>
-                <li>Rastrear patrones de uso y análisis</li>
-                <li>Prevenir actividades fraudulentas y mejorar la seguridad</li>
-            </ul>
-            <p>
-                <strong>Publicidad personalizada:</strong> Puede optar por no participar en la publicidad personalizada visitando la <a href="https://www.google.com/settings/ads" class="partner-link">Configuración de anuncios de Google</a> o utilizando la configuración del identificador publicitario a nivel de dispositivo en su dispositivo móvil. Tenga en cuenta que optar por no participar en la publicidad personalizada no detiene la entrega de anuncios; continuará recibiendo anuncios genéricos.
+                <strong>Mecanismo de Revocación Fluida de Consentimiento:</strong> Usted tiene el derecho soberano e inalienable de revocar, limitar o modificar su consentimiento en cualquier momento sin fricción. Para cambiar sus preferencias en la Aplicación, diríjase a <strong>Ajustes &rarr; Privacidad y Consentimiento</strong> y pulse en <strong>"Gestionar Opciones de Consentimiento de Anuncios"</strong>. Esta acción reinvocará de inmediato el panel del SDK de Plataforma de Mensajería del Usuario (UMP) para modificar o retirar su autorización.
             </p>
             <p>
-                <strong>Consentimiento del usuario de la UE:</strong> Si se encuentra en el Espacio Económico Europeo (EEE), la Aplicación solicitará su consentimiento antes de utilizar cookies o tecnologías similares para fines publicitarios. Puede administrar sus preferencias de consentimiento a través de la configuración de la Aplicación o visitando los centros de preferencia de los socios publicitarios.
-            </p>
-            <p>
-                El Proveedor de servicios no utiliza los productos de la plataforma de Google ni el código publicitario de Google para seleccionar o dirigir anuncios personalizados basados en información sensible, incluyendo pero no limitado a: información de salud o médica, estado financiero, orígenes raciales o étnicos, creencias religiosas, antecedentes penales, afiliación política, membresía sindical, o comportamiento u orientación sexual.
+                <strong>Controles del Sistema Operativo:</strong> Puede desactivar la publicidad personalizada a nivel de dispositivo ingresando en los ajustes de su sistema (ej. <em>Ajustes de Google &rarr; Anuncios &rarr; Eliminar o restablecer ID de publicidad</em> en Android, o <em>Ajustes &rarr; Privacidad &rarr; Rastreo</em> en iOS).
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Derechos de exclusión voluntaria</h2>
+            <h2>5. Derechos de Privacidad en Estados Unidos (CPRA / VCDPA y Aviso de "No Vender ni Compartir")</h2>
             <p>
-                Puede detener fácilmente toda la recopilación de información por parte de la Aplicación desinstalándola. Puede utilizar los procesos de desinstalación estándar que estén disponibles como parte de su dispositivo móvil o a través del mercado o red de aplicaciones móviles.
+                Bajo las leyes estatales de privacidad de EE. UU. (incluyendo la Ley de Derechos de Privacidad de California - CPRA y la VCDPA de Virginia), la transferencia técnica y automatizada de identificadores de dispositivo y direcciones IP a redes publicitarias para publicidad conductual de contexto cruzado califica jurídicamente como "venta" (selling) o "compartición" (sharing) de información personal.
+            </p>
+            <p>
+                <strong>Aviso Oficial de Derecho a Excluirse ("No Vender ni Compartir Mi Información Personal"):</strong> Arandu Labs LLC no comercializa datos personales por compensación monetaria directa. No obstante, usted tiene el derecho legal de excluirse de la compartición de sus datos para anuncios personalizados.
+            </p>
+            <p>
+                Para ejercer su derecho de exclusión, puede utilizar el menú interactivo de preferencias dentro de la app o activar señales de Control Global de Privacidad (GPC) en su dispositivo. Nuestra infraestructura publicitaria soporta la Global Privacy Platform (GPP) del IAB y transmite activamente señales de Procesamiento de Datos Restringido (RDP) a Google AdMob para operar en modo estricto de proveedor de servicios cuando se detecte un opt-out.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Política de retención de datos</h2>
+            <h2>6. Derechos de Exclusión Voluntaria (Opt-Out)</h2>
             <p>
-                El Proveedor de Servicios conservará los datos proporcionados por el Usuario mientras utilice la Aplicación y durante un tiempo razonable posteriormente. Si desea que eliminen los Datos proporcionados por el usuario que ha proporcionado a través de la Aplicación, comuníquese con ellos en <a href="mailto:soporte@arandulabs.dev" class="font-bold text-brandBlue">soporte@arandulabs.dev</a> y le responderán en un tiempo razonable.
+                Puede detener fácilmente toda recopilación técnica de información por parte de la Aplicación desinstalándola mediante los procesos habituales de su dispositivo móvil o tienda de aplicaciones.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Niños</h2>
+            <h2>7. Política de Retención y Supresión de Datos</h2>
             <p>
-                El Proveedor de servicios no utiliza la Aplicación para solicitar intencionalmente datos o comercializar a niños menores de 13 años.
-            </p>
-            <p>
-                La Aplicación no está dirigida a ninguna persona menor de 13 años. El Proveedor de servicios no recopila intencionadamente información de identificación personal de niños menores de 13 años. En el caso de que el Proveedor de servicios descubra que un niño menor de 13 años ha proporcionado información personal, el Proveedor de servicios la eliminará inmediatamente de sus servidores. Si es padre o tutor y sabe que su hijo nos ha proporcionado información personal, comuníquese con el Proveedor de servicios (<a href="mailto:soporte@arandulabs.dev" class="text-brandBlue font-bold">soporte@arandulabs.dev</a>) para que puedan tomar las acciones necesarias.
+                El Proveedor de Servicios conserva los registros técnicos de fallos por un máximo de 90 días, mientras que las analíticas agregadas persisten entre 14 y 26 meses. Si desea eliminar datos de autenticación provistos a través de la Aplicación, puede gestionar su baja automática en <a href="https://firmapp.arandulabs.dev/delete-account/" class="font-bold text-brandBlue">firmapp.arandulabs.dev/delete-account/</a> o contactarnos en <a href="mailto:soporte@arandulabs.dev" class="font-bold text-brandBlue">soporte@arandulabs.dev</a>.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Seguridad</h2>
+            <h2>8. Privacidad Infantil (Cumplimiento COPPA)</h2>
             <p>
-                El Proveedor de Servicios se preocupa por salvaguardar la confidencialidad de su información. El Proveedor de Servicios proporciona salvaguardias físicas, electrónicas y de procedimiento para proteger la información que el Proveedor de Servicios procesa y mantiene.
+                El Proveedor de Servicios no utiliza la Aplicación para solicitar datos deliberadamente ni comercializar a menores de 13 años.
+            </p>
+            <p>
+                La Aplicación no dirige publicidad conductual ni remarketing a menores de 13 años. Si se detecta que un menor de 13 años ha provisto datos personales, estos serán eliminados inmediatamente de nuestros servidores. Puede comunicarse con <a href="mailto:soporte@arandulabs.dev" class="text-brandBlue font-bold">soporte@arandulabs.dev</a> ante cualquier inquietud.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Cambios</h2>
+            <h2>9. Seguridad y Cifrado en Tránsito</h2>
             <p>
-                This política de privacidad may be updated from time to time for any reason. The Service Provider will notify you of any changes to the política de privacidad by updating this page with the new política de privacidad. You are advised to consult this política de privacidad regularly for any changes, as continued use is deemed approval of all changes.
+                El Proveedor de Servicios implementa salvaguardas técnicas, físicas y procedimentales avanzadas, garantizando el cifrado obligatorio de extremo a extremo en tránsito (mediante protocolos TLS/HTTPS) para toda comunicación entre la Aplicación y servidores externos.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Su consentimiento</h2>
+            <h2>10. Cambios a esta Política de Privacidad</h2>
             <p>
-                By using the Application, you are consenting to the processing of your information as set forth in this política de privacidad now and as amended by us.
+                Esta Política de Privacidad puede actualizarse periódicamente. Le notificaremos cualquier modificación actualizando la "Fecha de entrada en vigor" en el encabezado. El uso continuo de la Aplicación tras publicarse los cambios constituye la aceptación de los mismos.
             </p>
         </div>
 
         <div class="legal-section">
-            <h2>Contáctenos</h2>
+            <h2>11. Su Consentimiento</h2>
             <p>
-                Si tiene alguna pregunta sobre la privacidad al utilizar la Aplicación, o tiene preguntas sobre las prácticas, comuníquese con el Proveedor de servicios por correo electrónico a <a href="mailto:soporte@arandulabs.dev" class="text-brandBlue font-bold">soporte@arandulabs.dev</a>.
+                Al utilizar la Aplicación, usted consiente el tratamiento de su información según lo establecido en esta Política de Privacidad.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2>12. Contáctenos</h2>
+            <p>
+                Si tiene preguntas sobre la privacidad, la protección de datos o las prácticas de terceros, comuníquese con Arandu Labs LLC por correo electrónico en <a href="mailto:soporte@arandulabs.dev" class="text-brandBlue font-bold">soporte@arandulabs.dev</a>.
             </p>
         </div>
 
